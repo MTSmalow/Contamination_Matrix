@@ -49,7 +49,7 @@ make
 ```
 make          compila o projeto
 make clean    remove os arquivos .o
-make fclean   remove os .o e o libftprintf.a
+make fclean   remove os .o
 make re       fclean + make
 ```
 
