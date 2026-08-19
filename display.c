@@ -12,7 +12,10 @@ void	display_matrix(t_grid *grid)
 		j = 0;
 		while (j < grid->size)
 		{
-			printf("%d ", grid->cells[i][j]);
+			if (grid->cells[i][j] == 1)
+				printf("\x1b[48;2;255;70;70m 1 \x1b[0m");
+			else
+				printf("\x1b[48;2;100;255;120m 0 \x1b[0m");
 			j++;
 		}
 		printf("\n");
