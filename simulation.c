@@ -1,6 +1,6 @@
 #include "matrix.h"
 
-static void	print_progress(t_sim *sim, int cycle)
+static void	print_progress(t_sim *sim, int cycle, int colored, int text_only)
 {
 	int	total;
 	int	infected;
@@ -8,12 +8,12 @@ static void	print_progress(t_sim *sim, int cycle)
 	total = sim->grid.size * sim->grid.size;
 	infected = count_contaminated(&sim->grid);
 	printf("\nCycle %d:\n", cycle);
-	display_matrix(&sim->grid);
+	display_matrix(&sim->grid, colored, text_only);
 	printf("Contaminated people: %d of %d (%.2f%%)\n",
 		infected, total, (float)infected / total * 100);
 }
 
-static void	print_final_report(t_sim *sim, int cycle, int done)
+static void	printfr(t_sim *sim, int cycle, int done, int colored, int text_only)
 {
 	int	total;
 	int	infected;
@@ -26,12 +26,15 @@ static void	print_final_report(t_sim *sim, int cycle, int done)
 	{
 		printf("\nAfter %d cycles, population was not fully contaminated.\n",
 			sim->max_cycles);
-		printf("Contaminated people: %d of %d (%.2f%%)\n",
-			infected, total, (float)infected / total * 100);
 	}
+	if (!text_only)
+		printf("\nFinal state:\n");
+	display_matrix(&sim->grid, colored, text_only);
+	printf("Contaminated people: %d of %d (%.2f%%)\n",
+		infected, total, (float)infected / total * 100);
 }
 
-void	run_simulation(t_sim *sim)
+void	run_simulation(t_sim *sim, int colored, int text_only, int final_only)
 {
 	int	cycle;
 	int	done;
@@ -43,8 +46,8 @@ void	run_simulation(t_sim *sim)
 		cycle++;
 		spread_contamination(sim);
 		done = is_fully_contaminated(&sim->grid);
-		if (!done)
-			print_progress(sim, cycle);
+		if (!done && !final_only)
+			print_progress(sim, cycle, colored, text_only);
 	}
-	print_final_report(sim, cycle, done);
+	printfr(sim, cycle, done, colored, text_only);
 }

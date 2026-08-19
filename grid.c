@@ -9,13 +9,12 @@ t_grid	grid_create(int n)
 	grid.cells = (int **)malloc(n * sizeof(int *));
 	if (!grid.cells)
 		return (grid);
-	i = 0;
-	while (i < n)
+	i = -1;
+	while (++i < n)
 	{
 		grid.cells[i] = (int *)malloc(n * sizeof(int));
 		if (!grid.cells[i])
 			break ;
-		i++;
 	}
 	if (i < n)
 	{

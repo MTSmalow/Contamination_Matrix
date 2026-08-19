@@ -4,6 +4,7 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <time.h>
+# include <string.h>
 
 typedef struct s_grid
 {
@@ -24,7 +25,7 @@ void	grid_free(t_grid *grid);
 void	grid_init(t_grid *grid);
 void	grid_copy(t_grid *dest, t_grid *src);
 
-void	display_matrix(t_grid *grid);
+void	display_matrix(t_grid *grid, int colored, int text_only);
 int		count_contaminated(t_grid *grid);
 int		is_fully_contaminated(t_grid *grid);
 
@@ -33,7 +34,7 @@ int		count_infected_neighbors(t_grid *grid, int i, int j);
 void	update_cell(t_sim *sim, int i, int j);
 void	spread_contamination(t_sim *sim);
 
-void	run_simulation(t_sim *sim);
+void	run_simulation(t_sim *sim, int colored, int text_only, int final_only);
 
 int		get_params(t_sim *sim, int *n);
 
